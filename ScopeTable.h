@@ -6,6 +6,14 @@
 class ScopeTable{
 	int BUCKET_SIZE;
 	SymbolInfo *symbols;
+	
+	public:
+		ScopeTable(int size);
+		
 };
+
+ScopeTable::ScopeTable(int size){
+	this->BUCKET_SIZE=size;
+}
 
 #endif
