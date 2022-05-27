@@ -89,7 +89,9 @@ bool SymbolTable::removeSymbol(string name){
 
 bool SymbolTable::insertSymbol(string name,string type){
 	SymbolInfo *newSymbol=new SymbolInfo(name,type);
-	return this->currentScope->insertSymbol(newSymbol);
+	bool isInserted=this->currentScope->insertSymbol(newSymbol);
+	if(!isInserted)delete newSymbol;
+	return isInserted;
 }
 
 void SymbolTable::exitScope(){

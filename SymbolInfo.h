@@ -27,7 +27,7 @@ class SymbolInfo{
 };
 
 SymbolInfo::~SymbolInfo(){
-	delete this->nextSymbol;
+	//delete this->nextSymbol;
 }
 
 SymbolInfo::SymbolInfo(string name,string type){

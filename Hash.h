@@ -24,8 +24,14 @@ class Hash{
 
 
 Hash::~Hash(){
-	for(int i=0;i<size;i++)
-		delete items[i];
+	for(int i=0;i<size;i++){
+		SymbolInfo *currSymbol=items[i];
+		while(currSymbol!=NULL){
+			SymbolInfo *tmpSymbol=currSymbol;
+			currSymbol=currSymbol->getNextSymbol();
+			delete tmpSymbol;
+		}
+	}
 	free(items);
 }
 
