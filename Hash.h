@@ -8,12 +8,14 @@ class Hash{
 	int size;
 	SymbolInfo **items;
 	
+	unsigned long hashFunction(string name);
+	bool exists(string name);
+	
 	public:
 		Hash(int size);
 		bool insertItem(SymbolInfo *item);
-		bool deleteItem(SymbolInfo *item);
-		bool exists(SymbolInfo *item);
-		unsigned long hashFunction(SymbolInfo *item);
+		bool deleteItem(string name);
+		SymbolInfo *findItemByName(string name);
 		void print();
 };
 
@@ -24,9 +26,23 @@ Hash::Hash(int size){
 		this->items[i]=NULL;
 }
 
+SymbolInfo *Hash::findItemByName(string name){
+	int index=(int)this->hashFunction(name);
+	if(this->items[index]==NULL)return NULL;
+	SymbolInfo *currSymbol=this->items[index];
+	bool isFound=false;
+	while(currSymbol!=NULL){
+		if(currSymbol->getName().compare(name)==0){
+			isFound=true;
+			break;
+		}
+		currSymbol=currSymbol->getNextSymbol();
+	}
+	return currSymbol;
+}
 
-unsigned long Hash::hashFunction(SymbolInfo *item){
-	string s=item->getName();
+
+unsigned long Hash::hashFunction(string s){
     unsigned long hash = 0;
     for(int i=0;i<s.size();i++)
     	hash = s[i] + (hash << 6) + (hash << 16) - hash;       
@@ -35,13 +51,13 @@ unsigned long Hash::hashFunction(SymbolInfo *item){
 
 
 
-bool Hash::exists(SymbolInfo *item){
-	int index=this->hashFunction(item);
+bool Hash::exists(string name){
+	int index=this->hashFunction(name);
 	if(this->items[index]==NULL)return false;
 	SymbolInfo *currSymbol=this->items[index];
 	bool isFound=false;
 	while(currSymbol!=NULL){
-		if(currSymbol->getName().compare(item->getName())==0){
+		if(currSymbol->getName().compare(name)==0){
 			isFound=true;
 			break;
 		}
@@ -50,13 +66,13 @@ bool Hash::exists(SymbolInfo *item){
 	return isFound;
 }
 
-bool Hash::deleteItem(SymbolInfo *item){
-	if(!exists(item))return false;
-	int index=this->hashFunction(item);
+bool Hash::deleteItem(string name){
+	if(!exists(name))return false;
+	int index=this->hashFunction(name);
 	SymbolInfo *prevSymbol=items[index];
 	SymbolInfo *currSymbol=items[index];
 	
-	while(currSymbol->getName().compare(item->getName())!=0){
+	while(currSymbol->getName().compare(name)!=0){
 		prevSymbol=currSymbol;
 		currSymbol=currSymbol->getNextSymbol();
 	}
@@ -66,14 +82,14 @@ bool Hash::deleteItem(SymbolInfo *item){
 	else
 		prevSymbol->setNextSymbol(currSymbol->getNextSymbol());
 	
-	//delete currSymbol;
+	delete currSymbol;
 
 	return true;
 }
 
 bool Hash::insertItem(SymbolInfo *item){
-	if(exists(item))return false;
-	int index=this->hashFunction(item);
+	if(exists(item->getName()))return false;
+	int index=this->hashFunction(item->getName());
 	if(this->items[index]==NULL)
 		items[index]=item;
 	else{

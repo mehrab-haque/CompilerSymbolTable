@@ -21,7 +21,8 @@ class SymbolInfo{
 		void setType(string type);
 		string getType();
 		void setNextSymbol(SymbolInfo *nextSymbol);
-		SymbolInfo *getNextSymbol();	
+		SymbolInfo *getNextSymbol();
+		void print();	
 };
 
 SymbolInfo::SymbolInfo(string name,string type){
@@ -52,6 +53,12 @@ SymbolInfo *SymbolInfo::getNextSymbol(){
 
 void SymbolInfo::setNextSymbol(SymbolInfo *nextSymbol){
 	this->nextSymbol=nextSymbol;
+}
+
+void SymbolInfo::print(){
+	cout<<"########SYMBOL INFO START########"<<endl;
+	cout<<"<"<<name<<","<<type<<">"<<endl;
+	cout<<"########SYMBOL INFO END########"<<endl<<endl;
 }
 
 

@@ -40,24 +40,28 @@ int main(){
 	hash->print();	
 	
 	//delete test of only symbol in a chain
-	cout<<"deleting "<<symbol12->getName()<<endl;
-	hash->deleteItem(symbol12);
+	cout<<"deleting "<<"Starry night"<<endl;
+	hash->deleteItem("Starry night");
 	hash->print();
 	
 	//delete test first symbol of a chain
-	cout<<"deleting "<<symbol1->getName()<<endl;
-	hash->deleteItem(symbol1);
+	cout<<"deleting "<<"aye"<<endl;
+	hash->deleteItem("aye");
 	hash->print();
 	
 	//delete test last symbol of a chain
-	cout<<"deleting "<<symbol11->getName()<<endl;
-	hash->deleteItem(symbol11);
+	cout<<"deleting "<<"Terrific day"<<endl;
+	hash->deleteItem("Terrific day");
 	hash->print();
 	
 	//delete test intermediate symbol of a chain
-	cout<<"deleting "<<symbol4->getName()<<endl;
-	hash->deleteItem(symbol4);
+	cout<<"deleting "<<"sunny weather"<<endl;
+	hash->deleteItem("sunny weather");
 	hash->print();
+	
+	SymbolInfo *foundSymbol=hash->findItemByName("I m fine, thank you");
+	if(foundSymbol==NULL)cout<<"Not Found"<<endl;
+	else foundSymbol->print();
 	
 	return 0;
 }

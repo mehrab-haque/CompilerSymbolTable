@@ -1,19 +1,81 @@
 #ifndef SCOPETABLE_H
 #define SCOPETABLE_H
 
+#include <string>
+#include <sstream>
 #include "SymbolInfo.h"
+#include "Hash.h"
 
 class ScopeTable{
-	int BUCKET_SIZE;
-	SymbolInfo *symbols;
+	Hash *hash;
+	ScopeTable *parentScope;
+	string id;
+	int nChildScopes;
 	
 	public:
+		ScopeTable(int size,ScopeTable *parentScope);
 		ScopeTable(int size);
-		
+		string getId();
+		int getNChildScopes();
+		string getNChildScopesString();
+		void incrementNChild();
+		void print();
+		bool insertSymbol(SymbolInfo *symbol);
+		bool deleteSymbol(string name);
+		SymbolInfo *lookup(string name);
 };
 
+string ScopeTable::getId(){
+	return this->id;
+}
+
+int ScopeTable::getNChildScopes(){
+	return this->nChildScopes;
+}
+
+void ScopeTable::incrementNChild(){
+	this->nChildScopes+=1;
+}
+
+string ScopeTable::getNChildScopesString(){
+	string result;  
+	ostringstream convert;   
+	convert << this->nChildScopes; 
+	result = convert.str();
+	return result;
+}
+
+
+ScopeTable::ScopeTable(int size,ScopeTable *parentScope){
+	this->hash=new Hash(size);
+	this->nChildScopes=0;
+	this->parentScope=parentScope;
+	this->parentScope->incrementNChild();
+	this->id=parentScope->getId()+"."+this->parentScope->getNChildScopesString();
+}
+
 ScopeTable::ScopeTable(int size){
-	this->BUCKET_SIZE=size;
+	this->hash=new Hash(size);
+	this->nChildScopes=0;
+	this->parentScope=NULL;
+	this->id="1";
+}
+
+void ScopeTable::print(){
+	cout<<"Scope id : "<<this->id<<endl;
+	this->hash->print();
+}
+
+bool ScopeTable::insertSymbol(SymbolInfo *symbol){
+	return this->hash->insertItem(symbol);
+}
+
+bool ScopeTable::deleteSymbol(string name){
+	return this->hash->deleteItem(name);
+}
+
+SymbolInfo *ScopeTable::lookup(string name){
+	return this->hash->findItemByName(name);
 }
 
 #endif
