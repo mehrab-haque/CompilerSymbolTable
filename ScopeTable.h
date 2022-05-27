@@ -23,7 +23,12 @@ class ScopeTable{
 		bool insertSymbol(SymbolInfo *symbol);
 		bool deleteSymbol(string name);
 		SymbolInfo *lookup(string name);
+		ScopeTable *getParentScope();
 };
+
+ScopeTable *ScopeTable::getParentScope(){
+	return this->parentScope;
+}
 
 string ScopeTable::getId(){
 	return this->id;
