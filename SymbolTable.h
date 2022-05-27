@@ -22,12 +22,14 @@ class SymbolTable{
 
 void SymbolTable::printScopesRecursively(ScopeTable *scope){
 	if(scope->getParentScope()!=NULL)
-		scope=scope->getParentScope();
+		this->printScopesRecursively(scope->getParentScope());
 	scope->print();
 }
 
 void SymbolTable::printAllScopes(){
+	cout<<"########SYMBOL TABLE PRINT START########"<<endl<<endl;
 	this->printScopesRecursively(currentScope);
+	cout<<"########SYMBOL TABLE PRINT END########"<<endl<<endl;
 }
 
 void SymbolTable::printCurrentScope(){
