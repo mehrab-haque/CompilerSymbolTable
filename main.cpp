@@ -88,12 +88,13 @@ int main(){
 					cout<<"Cannot exit global scope until the inputs finish, global symbols are cleared instead"<<endl<<endl;
 				else{
 					string deletedScopeId=symbolTable->getCurrentScopeId();
-			    	symbolTable->exitScope();
 			    	cout<<"ScopeTable with id "<<deletedScopeId<<" is removed"<<endl<<"Destroying the ScopeTable"<<endl<<endl;
 				}
+				symbolTable->exitScope();
 			}
 		}
 	}
 		
+	delete symbolTable;
 	return 0;
 }

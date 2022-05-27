@@ -22,8 +22,13 @@ class SymbolInfo{
 		string getType();
 		void setNextSymbol(SymbolInfo *nextSymbol);
 		SymbolInfo *getNextSymbol();
-		void print();	
+		void print();
+		~SymbolInfo();	
 };
+
+SymbolInfo::~SymbolInfo(){
+	delete this->nextSymbol;
+}
 
 SymbolInfo::SymbolInfo(string name,string type){
 	this->name=name;

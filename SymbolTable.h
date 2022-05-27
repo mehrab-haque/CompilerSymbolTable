@@ -9,6 +9,7 @@ class SymbolTable{
 	int bucketSize;
 	ScopeTable *currentScope;
 	void printScopesRecursively(ScopeTable *scope);
+	void freeScopesRecursively(ScopeTable *scope);
 	public:
 		SymbolTable(int bucketSize);
 		void enterScope();
@@ -23,7 +24,18 @@ class SymbolTable{
 		int getHashPos(string name);
 		int getChainPos(string name);
 		bool isGlobalScope();
+		~SymbolTable();
 };
+
+void SymbolTable::freeScopesRecursively(ScopeTable *scope){
+	if(scope->getParentScope()!=NULL)
+		this->freeScopesRecursively(scope->getParentScope());
+	delete scope;
+}
+
+SymbolTable::~SymbolTable(){
+	freeScopesRecursively(this->currentScope);
+}
 
 bool SymbolTable::isGlobalScope(){
 	return currentScope->getParentScope()==NULL;

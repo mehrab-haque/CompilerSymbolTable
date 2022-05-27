@@ -26,7 +26,12 @@ class ScopeTable{
 		ScopeTable *getParentScope();
 		int getHashPos(string name);
 		int getChainPos(string name);
+		~ScopeTable();
 };
+
+ScopeTable::~ScopeTable(){
+	delete this->hash;
+}
 
 int ScopeTable::getHashPos(string name){
 	return this->hash->getHashPos(name);

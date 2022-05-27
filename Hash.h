@@ -19,7 +19,17 @@ class Hash{
 		int getHashPos(string name);
 		int getChainPos(string name);
 		void print();
+		~Hash();
 };
+
+
+Hash::~Hash(){
+	for(int i=0;i<size;i++)
+		delete items[i];
+	free(items);
+}
+
+
 
 int Hash::getHashPos(string name){
 	return this->hashFunction(name);
