@@ -31,12 +31,31 @@ int main(){
 		    if(command.compare("I")==0){
 		    	string name,type;
 		    	iss>>name>>type;
-		    	symbolTable->insertSymbol(name,type);
+		    	bool isInserted=symbolTable->insertSymbol(name,type);
+				if(!isInserted){
+					SymbolInfo *symbol=symbolTable->lookup(name);
+					cout<<"This word already exists"<<endl<<"< "<<symbol->getName()<<", "<<symbol->getType()<<" > already exists in the currentScopeTable"<<endl<<endl;
+				}
+					
+				else{
+					string scopeId=symbolTable->getCurrentScopeId();
+					int hashPos=symbolTable->getHashPos(name);
+					int chainPos=symbolTable->getChainPos(name);
+					cout<<"Inserted in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
+				}
 			}
 			else if(command.compare("L")==0){
 		    	string name;
 		    	iss>>name;
-		    	symbolTable->lookup(name);
+		    	SymbolInfo *symbol=symbolTable->lookup(name);
+		    	if(symbol==NULL)
+		    		cout<<"Not Found"<<endl<<endl;
+		  		else{
+		  			string scopeId=symbolTable->getCurrentScopeId();
+					int hashPos=symbolTable->getHashPos(name);
+					int chainPos=symbolTable->getChainPos(name);
+					cout<<"Found in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
+				}
 			}
 			else if(command.compare("P")==0){
 		    	string printType;
@@ -49,13 +68,29 @@ int main(){
 			else if(command.compare("D")==0){
 		    	string name;
 		    	iss>>name;
-		    	symbolTable->removeSymbol(name);
+		    	SymbolInfo *symbol=symbolTable->lookupCurrent(name);
+		    	if(symbol==NULL)
+		    		cout<<"Not Found"<<endl<<name<<" is not found"<<endl<<endl;
+	    		else{
+	    			string scopeId=symbolTable->getCurrentScopeId();
+					int hashPos=symbolTable->getHashPos(name);
+					int chainPos=symbolTable->getChainPos(name);
+					symbolTable->removeSymbol(name);
+					cout<<"Found in ScopeTable# "<<symbolTable->getCurrentScopeId()<<" at position "<<hashPos<<", "<<chainPos<<endl<<"Found it"<<endl<<"Deleted entry at position "<<hashPos<<", "<<chainPos<<" in the current scopetable"<<endl<<endl;
+				}
 			}
 			else if(command.compare("S")==0){
 		    	symbolTable->enterScope();
+		    	cout<<"New ScopeTable with id# "<<symbolTable->getCurrentScopeId()<<" is created"<<endl<<endl;
 			}
 			else if(command.compare("E")==0){
-		    	symbolTable->exitScope();
+				if(symbolTable->isGlobalScope())
+					cout<<"Cannot exit global scope until the inputs finish, global symbols are cleared instead"<<endl<<endl;
+				else{
+					string deletedScopeId=symbolTable->getCurrentScopeId();
+			    	symbolTable->exitScope();
+			    	cout<<"ScopeTable with id "<<deletedScopeId<<" is removed"<<endl<<"Destroying the ScopeTable"<<endl<<endl;
+				}
 			}
 		}
 	}

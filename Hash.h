@@ -16,8 +16,27 @@ class Hash{
 		bool insertItem(SymbolInfo *item);
 		bool deleteItem(string name);
 		SymbolInfo *findItemByName(string name);
+		int getHashPos(string name);
+		int getChainPos(string name);
 		void print();
 };
+
+int Hash::getHashPos(string name){
+	return this->hashFunction(name);
+}
+
+int Hash::getChainPos(string name){
+	int index= this->hashFunction(name);
+	int serial=0;
+	SymbolInfo *currSymbol=items[index];
+	while(currSymbol!=NULL){
+		if(currSymbol->getName().compare(name)==0)
+			break;
+		serial++;
+		currSymbol=currSymbol->getNextSymbol();
+	}
+	return serial;
+}
 
 Hash::Hash(int size){
 	this->size=size;
@@ -102,19 +121,16 @@ bool Hash::insertItem(SymbolInfo *item){
 }
 
 void Hash::print(){
-	cout<<"########HASH TABLE START########"<<endl;
 	for(int i=0;i<this->size;i++){
-		cout<<i<<" : ";
+		cout<<i<<" --> ";
 		SymbolInfo *currSymbol=this->items[i];
 		while(currSymbol!=NULL){
-			cout<<currSymbol->getName();
+			cout<<"< "<<currSymbol->getName()<<" : "<<currSymbol->getType()<<" >";
 			currSymbol=currSymbol->getNextSymbol();
-			if(currSymbol!=NULL)
-				cout<<" -> ";
 		}
 		cout<<endl;
 	}
-	cout<<"########HASH TABLE END########"<<endl<<endl;
+	cout<<endl;
 }
 
 #endif

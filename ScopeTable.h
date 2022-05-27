@@ -24,7 +24,17 @@ class ScopeTable{
 		bool deleteSymbol(string name);
 		SymbolInfo *lookup(string name);
 		ScopeTable *getParentScope();
+		int getHashPos(string name);
+		int getChainPos(string name);
 };
+
+int ScopeTable::getHashPos(string name){
+	return this->hash->getHashPos(name);
+}
+
+int ScopeTable::getChainPos(string name){
+	return this->hash->getChainPos(name);
+}
 
 ScopeTable *ScopeTable::getParentScope(){
 	return this->parentScope;
@@ -67,7 +77,7 @@ ScopeTable::ScopeTable(int size){
 }
 
 void ScopeTable::print(){
-	cout<<"Scope id : "<<this->id<<endl;
+	cout<<"ScopeTable# "<<this->id<<endl;
 	this->hash->print();
 }
 

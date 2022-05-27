@@ -16,20 +16,43 @@ class SymbolTable{
 		bool insertSymbol(string name,string type);
 		bool removeSymbol(string name);
 		SymbolInfo *lookup(string name);
+		SymbolInfo *lookupCurrent(string name);
 		void printCurrentScope();
 		void printAllScopes();
+		string getCurrentScopeId();
+		int getHashPos(string name);
+		int getChainPos(string name);
+		bool isGlobalScope();
 };
 
+bool SymbolTable::isGlobalScope(){
+	return currentScope->getParentScope()==NULL;
+}
+
+SymbolInfo *SymbolTable::lookupCurrent(string name){
+	return currentScope->lookup(name);
+}
+
+int SymbolTable::getHashPos(string name){
+	return this->currentScope->getHashPos(name);
+}
+
+int SymbolTable::getChainPos(string name){
+	return this->currentScope->getChainPos(name);
+}
+
+string SymbolTable::getCurrentScopeId(){
+	return this->currentScope->getId();
+}
+
 void SymbolTable::printScopesRecursively(ScopeTable *scope){
+	scope->print();
 	if(scope->getParentScope()!=NULL)
 		this->printScopesRecursively(scope->getParentScope());
-	scope->print();
 }
 
 void SymbolTable::printAllScopes(){
-	cout<<"########SYMBOL TABLE PRINT START########"<<endl<<endl;
 	this->printScopesRecursively(currentScope);
-	cout<<"########SYMBOL TABLE PRINT END########"<<endl<<endl;
 }
 
 void SymbolTable::printCurrentScope(){
