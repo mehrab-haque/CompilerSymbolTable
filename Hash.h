@@ -3,10 +3,12 @@
 
 #include "SymbolInfo.h"
 #include <cstdlib>
+#include <sstream>
 
 class Hash{
 	int size;
 	SymbolInfo **items;
+	stringstream printStream;
 	
 	unsigned long hashFunction(string name);
 	bool exists(string name);
@@ -18,7 +20,7 @@ class Hash{
 		SymbolInfo *findItemByName(string name);
 		int getHashPos(string name);
 		int getChainPos(string name);
-		void print();
+		string print();
 		~Hash();
 };
 
@@ -136,17 +138,19 @@ bool Hash::insertItem(SymbolInfo *item){
 	return true;
 }
 
-void Hash::print(){
+string Hash::print(){
+	printStream.str("");
 	for(int i=0;i<this->size;i++){
-		cout<<i<<" --> ";
+		printStream<<i<<" --> ";
 		SymbolInfo *currSymbol=this->items[i];
 		while(currSymbol!=NULL){
-			cout<<"< "<<currSymbol->getName()<<" : "<<currSymbol->getType()<<" >";
+			printStream<<"< "<<currSymbol->getName()<<" : "<<currSymbol->getType()<<" >";
 			currSymbol=currSymbol->getNextSymbol();
 		}
-		cout<<endl;
+		printStream<<endl;
 	}
-	cout<<endl;
+	printStream<<endl;
+	return printStream.str();
 }
 
 #endif

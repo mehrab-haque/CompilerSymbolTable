@@ -29,9 +29,9 @@ int main(){
 	
 	scope21->deleteSymbol(symbol3->getName());
 	
-	scope1->print();
-	scope2->print();
-	scope21->print();
+	cout<<scope1->print();
+	cout<<scope2->print();
+	cout<<scope21->print();
 	
 	return 0;
 }

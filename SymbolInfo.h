@@ -4,6 +4,7 @@
 //Dependencies
 #include<iostream>
 #include <string>
+#include<sstream>
 
 using namespace std;
 
@@ -13,6 +14,9 @@ using namespace std;
 class SymbolInfo{
 	string name;
 	string type;
+
+	stringstream printStream;
+
 	SymbolInfo *nextSymbol;
 	public:
 		SymbolInfo(string name,string type);
@@ -22,7 +26,7 @@ class SymbolInfo{
 		string getType();
 		void setNextSymbol(SymbolInfo *nextSymbol);
 		SymbolInfo *getNextSymbol();
-		void print();
+		string print();
 		~SymbolInfo();	
 };
 
@@ -60,10 +64,12 @@ void SymbolInfo::setNextSymbol(SymbolInfo *nextSymbol){
 	this->nextSymbol=nextSymbol;
 }
 
-void SymbolInfo::print(){
-	cout<<"########SYMBOL INFO START########"<<endl;
-	cout<<"<"<<name<<","<<type<<">"<<endl;
-	cout<<"########SYMBOL INFO END########"<<endl<<endl;
+string SymbolInfo::print(){
+	printStream.str("");
+	printStream<<"########SYMBOL INFO START########"<<endl;
+	printStream<<"<"<<name<<","<<type<<">"<<endl;
+	printStream<<"########SYMBOL INFO END########"<<endl<<endl;
+	return printStream.str();
 }
 
 

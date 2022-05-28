@@ -37,31 +37,31 @@ int main(){
 	hash->insertItem(symbol10);
 	hash->insertItem(symbol11);
 	hash->insertItem(symbol12);
-	hash->print();	
+	cout<<hash->print();	
 	
 	//delete test of only symbol in a chain
 	cout<<"deleting "<<"Starry night"<<endl;
 	hash->deleteItem("Starry night");
-	hash->print();
+	cout<<hash->print();
 	
 	//delete test first symbol of a chain
 	cout<<"deleting "<<"aye"<<endl;
 	hash->deleteItem("aye");
-	hash->print();
+	cout<<hash->print();
 	
 	//delete test last symbol of a chain
 	cout<<"deleting "<<"Terrific day"<<endl;
 	hash->deleteItem("Terrific day");
-	hash->print();
+	cout<<hash->print();
 	
 	//delete test intermediate symbol of a chain
 	cout<<"deleting "<<"sunny weather"<<endl;
 	hash->deleteItem("sunny weather");
-	hash->print();
+	cout<<hash->print();
 	
 	SymbolInfo *foundSymbol=hash->findItemByName("I m fine, thank you");
 	if(foundSymbol==NULL)cout<<"Not Found"<<endl;
-	else foundSymbol->print();
+	else cout<<foundSymbol->print();
 	
 	return 0;
 }

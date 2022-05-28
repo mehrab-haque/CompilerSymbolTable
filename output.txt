@@ -1,0 +1,144 @@
+Inserted in ScopeTable# 1 at position 6, 0
+
+Inserted in ScopeTable# 1 at position 0, 0
+
+Found in ScopeTable# 1 at position 6, 0
+
+Not Found
+
+Inserted in ScopeTable# 1 at position 4, 0
+
+ScopeTable# 1
+0 --> < i : VAR >
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+Not Found
+j is not found
+
+Found in ScopeTable# 1 at position 0, 0
+Found it
+Deleted entry at position 0, 0 in the current scopetable
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+New ScopeTable with id# 1.1 is created
+
+Inserted in ScopeTable# 1.1 at position 6, 0
+
+Inserted in ScopeTable# 1.1 at position 1, 0
+
+ScopeTable# 1.1
+0 --> 
+1 --> < == : RELOP >
+2 --> 
+3 --> 
+4 --> 
+5 --> 
+6 --> < <= : RELOP >
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+ScopeTable# 1.1
+0 --> 
+1 --> < == : RELOP >
+2 --> 
+3 --> 
+4 --> 
+5 --> 
+6 --> < <= : RELOP >
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+This word already exists
+< <=, RELOP > already exists in the currentScopeTable
+
+Inserted in ScopeTable# 1.1 at position 6, 1
+
+Found in ScopeTable# 1.1 at position 1, 0
+Found it
+Deleted entry at position 1, 0 in the current scopetable
+
+ScopeTable# 1.1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> 
+5 --> 
+6 --> < <= : RELOP >< foo : FUNCTION >
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+ScopeTable# 1.1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> 
+5 --> 
+6 --> < <= : RELOP >< foo : FUNCTION >
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> 
+3 --> 
+4 --> < 5 : NUMBER >
+5 --> 
+6 --> < foo : FUNCTION >
+
+ScopeTable with id 1.1 is removed
+Destroying the ScopeTable
+
+Inserted in ScopeTable# 1 at position 4, 1
+
+Inserted in ScopeTable# 1 at position 2, 0
+
+ScopeTable# 1
+0 --> 
+1 --> 
+2 --> < k : k >
+3 --> 
+4 --> < 5 : NUMBER >< t : t >
+5 --> 
+6 --> < foo : FUNCTION >
+
+Cannot exit global scope until the inputs finish, global symbols are cleared instead
+
+Cannot exit global scope until the inputs finish, global symbols are cleared instead
+
+Inserted in ScopeTable# 1 at position 2, 0
+

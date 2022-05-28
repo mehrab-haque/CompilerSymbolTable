@@ -2,14 +2,16 @@
 #define SYMBOLABLE_H
 
 #include <string>
+#include <sstream>
 #include "SymbolInfo.h"
 #include "ScopeTable.h"
 
 class SymbolTable{
 	int bucketSize;
 	ScopeTable *currentScope;
-	void printScopesRecursively(ScopeTable *scope);
+	string printScopesRecursively(ScopeTable *scope);
 	void freeScopesRecursively(ScopeTable *scope);
+	stringstream printStream;
 	public:
 		SymbolTable(int bucketSize);
 		void enterScope();
@@ -18,8 +20,8 @@ class SymbolTable{
 		bool removeSymbol(string name);
 		SymbolInfo *lookup(string name);
 		SymbolInfo *lookupCurrent(string name);
-		void printCurrentScope();
-		void printAllScopes();
+		string printCurrentScope();
+		string printAllScopes();
 		string getCurrentScopeId();
 		int getHashPos(string name);
 		int getChainPos(string name);
@@ -57,18 +59,21 @@ string SymbolTable::getCurrentScopeId(){
 	return this->currentScope->getId();
 }
 
-void SymbolTable::printScopesRecursively(ScopeTable *scope){
-	scope->print();
+string SymbolTable::printScopesRecursively(ScopeTable *scope){
+	printStream<<scope->print();
 	if(scope->getParentScope()!=NULL)
-		this->printScopesRecursively(scope->getParentScope());
+		printStream<<this->printScopesRecursively(scope->getParentScope());
+	return printStream.str();
 }
 
-void SymbolTable::printAllScopes(){
-	this->printScopesRecursively(currentScope);
+string SymbolTable::printAllScopes(){
+	printStream.str("");
+	return this->printScopesRecursively(currentScope);
 }
 
-void SymbolTable::printCurrentScope(){
-	this->currentScope->print();
+string SymbolTable::printCurrentScope(){
+	printStream.str("");
+	return this->currentScope->print();
 }
 
 SymbolInfo *SymbolTable::lookup(string name){

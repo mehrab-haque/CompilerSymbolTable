@@ -11,6 +11,7 @@ class ScopeTable{
 	ScopeTable *parentScope;
 	string id;
 	int nChildScopes;
+	stringstream printStream;
 	
 	public:
 		ScopeTable(int size,ScopeTable *parentScope);
@@ -19,7 +20,7 @@ class ScopeTable{
 		int getNChildScopes();
 		string getNChildScopesString();
 		void incrementNChild();
-		void print();
+		string print();
 		bool insertSymbol(SymbolInfo *symbol);
 		bool deleteSymbol(string name);
 		SymbolInfo *lookup(string name);
@@ -81,9 +82,10 @@ ScopeTable::ScopeTable(int size){
 	this->id="1";
 }
 
-void ScopeTable::print(){
-	cout<<"ScopeTable# "<<this->id<<endl;
-	this->hash->print();
+string ScopeTable::print(){
+	printStream.str("");
+	printStream<<"ScopeTable# "<<this->id<<endl<<this->hash->print();
+	return printStream.str();
 }
 
 bool ScopeTable::insertSymbol(SymbolInfo *symbol){

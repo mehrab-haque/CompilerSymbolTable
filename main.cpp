@@ -11,6 +11,9 @@ int main(){
 	string line;
 	
 	ifstream infile("input.txt");
+	ofstream outfile("output.txt");
+
+
 	bool isFirstLine=true;
 	
 	SymbolTable *symbolTable;
@@ -35,6 +38,8 @@ int main(){
 				if(!isInserted){
 					SymbolInfo *symbol=symbolTable->lookup(name);
 					cout<<"This word already exists"<<endl<<"< "<<symbol->getName()<<", "<<symbol->getType()<<" > already exists in the currentScopeTable"<<endl<<endl;
+					outfile<<"This word already exists"<<endl<<"< "<<symbol->getName()<<", "<<symbol->getType()<<" > already exists in the currentScopeTable"<<endl<<endl;
+				
 				}
 					
 				else{
@@ -42,53 +47,69 @@ int main(){
 					int hashPos=symbolTable->getHashPos(name);
 					int chainPos=symbolTable->getChainPos(name);
 					cout<<"Inserted in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
+					outfile<<"Inserted in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
+
 				}
 			}
 			else if(command.compare("L")==0){
 		    	string name;
 		    	iss>>name;
 		    	SymbolInfo *symbol=symbolTable->lookup(name);
-		    	if(symbol==NULL)
+		    	if(symbol==NULL){
 		    		cout<<"Not Found"<<endl<<endl;
+					outfile<<"Not Found"<<endl<<endl;
+				}
 		  		else{
 		  			string scopeId=symbolTable->getCurrentScopeId();
 					int hashPos=symbolTable->getHashPos(name);
 					int chainPos=symbolTable->getChainPos(name);
 					cout<<"Found in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
+					outfile<<"Found in ScopeTable# "<<scopeId<<" at position "<<hashPos<<", "<<chainPos<<endl<<endl;
 				}
 			}
 			else if(command.compare("P")==0){
 		    	string printType;
 		    	iss>>printType;
-		    	if(printType.compare("A")==0)
-		    		symbolTable->printAllScopes();
-		    	else if(printType.compare("C")==0) 
-					symbolTable->printCurrentScope();
+		    	if(printType.compare("A")==0){
+		    		cout<<symbolTable->printAllScopes();
+					outfile<<symbolTable->printAllScopes();
+				}
+		    	else if(printType.compare("C")==0) {
+					cout<<symbolTable->printCurrentScope();
+					outfile<<symbolTable->printCurrentScope();
+				}
 			}
 			else if(command.compare("D")==0){
 		    	string name;
 		    	iss>>name;
 		    	SymbolInfo *symbol=symbolTable->lookupCurrent(name);
-		    	if(symbol==NULL)
+		    	if(symbol==NULL){
 		    		cout<<"Not Found"<<endl<<name<<" is not found"<<endl<<endl;
+					outfile<<"Not Found"<<endl<<name<<" is not found"<<endl<<endl;
+				}
 	    		else{
 	    			string scopeId=symbolTable->getCurrentScopeId();
 					int hashPos=symbolTable->getHashPos(name);
 					int chainPos=symbolTable->getChainPos(name);
 					symbolTable->removeSymbol(name);
 					cout<<"Found in ScopeTable# "<<symbolTable->getCurrentScopeId()<<" at position "<<hashPos<<", "<<chainPos<<endl<<"Found it"<<endl<<"Deleted entry at position "<<hashPos<<", "<<chainPos<<" in the current scopetable"<<endl<<endl;
+					outfile<<"Found in ScopeTable# "<<symbolTable->getCurrentScopeId()<<" at position "<<hashPos<<", "<<chainPos<<endl<<"Found it"<<endl<<"Deleted entry at position "<<hashPos<<", "<<chainPos<<" in the current scopetable"<<endl<<endl;
 				}
 			}
 			else if(command.compare("S")==0){
 		    	symbolTable->enterScope();
 		    	cout<<"New ScopeTable with id# "<<symbolTable->getCurrentScopeId()<<" is created"<<endl<<endl;
+				outfile<<"New ScopeTable with id# "<<symbolTable->getCurrentScopeId()<<" is created"<<endl<<endl;
 			}
 			else if(command.compare("E")==0){
-				if(symbolTable->isGlobalScope())
+				if(symbolTable->isGlobalScope()){
 					cout<<"Cannot exit global scope until the inputs finish, global symbols are cleared instead"<<endl<<endl;
+					outfile<<"Cannot exit global scope until the inputs finish, global symbols are cleared instead"<<endl<<endl;
+				}
 				else{
 					string deletedScopeId=symbolTable->getCurrentScopeId();
 			    	cout<<"ScopeTable with id "<<deletedScopeId<<" is removed"<<endl<<"Destroying the ScopeTable"<<endl<<endl;
+					outfile<<"ScopeTable with id "<<deletedScopeId<<" is removed"<<endl<<"Destroying the ScopeTable"<<endl<<endl;
 				}
 				symbolTable->exitScope();
 			}
@@ -96,5 +117,8 @@ int main(){
 	}
 		
 	delete symbolTable;
+
+	infile.close();
+	outfile.close();
 	return 0;
 }
